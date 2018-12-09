@@ -1,6 +1,6 @@
 # Change Log
 
-## [0.3.0](https://github.com/smartiniOnGitHub/fastify-nats/releases/tag/0.3.0) (unreleased)
+## [0.3.0](https://github.com/smartiniOnGitHub/fastify-nats/releases/tag/0.3.0) (2019-12-09)
 Summary Changelog:
 - First release of my fork (see in the README for more info)
 - At the moment it's not clear the 'fastify-nats' package name at npm, if it will be transferred to me; 
