@@ -5,34 +5,63 @@
   [![Code Style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](http://standardjs.com/)
   [![Coverage Status](https://coveralls.io/repos/github/smartiniOnGitHub/fastify-nats-client/badge.svg?branch=master)](https://coveralls.io/github/smartiniOnGitHub/fastify-nats-client/?branch=master)
 
+Fastify Plugin to use [NATS](http://nats.io) Server as a queue, to exchange messages.
 
-Fastify Plugin for interacting with a NATS Server
+Under the hood [Node NATS](https://github.com/nats-io/node-nats) client is used, the options that you pass to `register` will be passed to the nats client.
 
 
 ## Usage
+Add it to you project with `register` and you are done!  
+You can access the *nats Connection* via `fastify.nats`.
+```js
+const fastify = require('fastify')
 
-TODO: ...
+fastify.register(require('fastify-nats-client'), {
+  url: 'nats://demo.nats.io:4222'
+}, err => {
+  if (err) throw err
+})
+
+fastify.listen(3000, (err, address) => {
+  if (err) throw err
+  console.log(`server listening on ${address}`)
+})
+```
+
+and later
+```js
+fastify.nats.publish(topic, message);
+```
 
 
 ## Requirements
 
-Fastify ^1.1.0 or later.
-NATS Server 1.3.0 or later.
-
-
-## References
-
-NATS Server, see [NATS Server - Source Code at GitHub](https://github.com/nats-io/gnatsd)
-Node.js client drivers for NATS Server, see [nats - npm package](https://www.npmjs.com/package/nats), [Node.js client for NATS Server - Source Code at GitHub](https://github.com/nats-io/node-nats)
+Fastify ^1.1.0 .
+Node.js 8.14.x or later.
 
 
 ## Note
 
-NATS Server is a trademark of related company, and the same apply to its drivers.
+All the code here is base on the work done by its original author (mahmed8003 <mahmed8003@gmail.com>), 
+in the upstream repository [fastify-nats](https://github.com/mahmed8003/fastify-nats), under the MIT license.
+
+The plugin decorate Fastify and expose some functions:
+- `nats`, the NATS Connection to use
+
+Plugin options are forwarder to [Node NATS](https://github.com/nats-io/node-nats) client, some are:
+- `url`, the absolute URL of the NATS Server to use (including the port)
+
+all plugin options are optional, and have a default value set in the plugin.
+
+Default `url` for NATS Server in the plugin is set to `nats://demo.nats.io:4222`, 
+to be able to do a quick start; anyway note that in some cases it could not be reachable 
+(for example by corporate firewall rules), so even plugin tests could fail in that case.
+So even some custom commands using NATS Server Docker image from 
+[NATS - DockerHub](https://hub.docker.com/_/nats/) are provided.
 
 
 ## License
 
-Licensed under [Apache-2.0](./LICENSE).
+Licensed under [MIT](./LICENSE).
 
 ----
