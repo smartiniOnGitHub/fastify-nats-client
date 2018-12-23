@@ -1,5 +1,9 @@
 # Change Log
 
+## [0.3.2](https://github.com/smartiniOnGitHub/fastify-nats/releases/tag/0.3.2) (2019-12-23)
+Summary Changelog:
+- Update plugin dependencies: 'fastify-plugin' to '^1.4.0', 'nats' to '^1.2.2'
+
 ## [0.3.1](https://github.com/smartiniOnGitHub/fastify-nats/releases/tag/0.3.1) (2019-12-09)
 Summary Changelog:
 - Update plugin dependencies: 'fastify-plugin' to '^1.3.0', 
