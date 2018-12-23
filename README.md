@@ -4,6 +4,7 @@
   [![NPM Downloads](https://img.shields.io/npm/dm/fastify-nats-client.svg?style=flat)](https://npmjs.org/package/fastify-nats-client/)
   [![Code Style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](http://standardjs.com/)
   [![Coverage Status](https://coveralls.io/repos/github/smartiniOnGitHub/fastify-nats-client/badge.svg?branch=master)](https://coveralls.io/github/smartiniOnGitHub/fastify-nats-client/?branch=master)
+  [![Dependencies](https://david-dm.org/smartiniOnGitHub/fastify-nats-client.svg)](https://david-dm.org/smartiniOnGitHub/fastify-nats-client.svg)
 
 Fastify Plugin to use [NATS](http://nats.io) Server as a queue, to exchange messages.
 
