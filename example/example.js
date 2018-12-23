@@ -1,5 +1,6 @@
 'use strict'
 
+const hostname = require('os').hostname()
 const assert = require('assert')
 const fastify = require('fastify')()
 
@@ -12,7 +13,7 @@ const k = {
 }
 // k.serverUrl = `${k.protocol}://${k.address}:${k.port}/`
 k.queueName = `${pluginName}-${pluginVersion}`
-k.message = 'Hello World, from a Fastify web application just started !'
+k.message = `Hello World, from a Fastify web application just started at '${hostname}'!`
 
 // register plugin with all its options (as a sample)
 fastify.register(require('../src/plugin'), {
@@ -37,7 +38,7 @@ fastify.get('/', function (req, reply) {
   reply.type('text/html; charset=utf-8').send(stream)
 
   // publish a message in the queue, as a sample
-  publish(fastify.nats, 'Hello World, from the root page of a Fastify web application !')
+  publish(fastify.nats, `Hello World, from the root page of a Fastify web application at '${hostname}'!`)
 })
 
 fastify.listen(k.port, k.address, (err, address) => {
@@ -72,7 +73,7 @@ function subscribe (nats,
 }
 
 function publish (nats, msg = '') {
-  console.log(`Publish the given message in the queue '${k.queueName}'`)
+  console.log(`Publish message in the queue '${k.queueName}'`)
   assert(fastify.nats !== null)
 
   // simple publisher
