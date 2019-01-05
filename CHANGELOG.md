@@ -1,5 +1,10 @@
 # Change Log
 
+## [0.4.0](https://github.com/smartiniOnGitHub/fastify-nats/releases/tag/0.4.0) (unreleased)
+Summary Changelog:
+- Use official NATS Server Docker image for some (specific) local tests, 
+  and related npm custom commands
+
 ## [0.3.3](https://github.com/smartiniOnGitHub/fastify-nats/releases/tag/0.3.3) (2019-01-05)
 Summary Changelog:
 - Update LICENSE and add NOTICE with the right attributions, 
