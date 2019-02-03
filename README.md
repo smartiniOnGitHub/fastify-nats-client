@@ -37,8 +37,7 @@ fastify.nats.publish(topic, message);
 
 ## Requirements
 
-Fastify ^1.1.0 .
-Node.js 8.14.x or later.
+Fastify ^1.1.0 , Node.js 8.15.x or later.
 
 
 ## Note

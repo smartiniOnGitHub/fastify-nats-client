@@ -4,6 +4,7 @@
 Summary Changelog:
 - Use official NATS Server Docker image for some (specific) local tests, 
   and related npm custom commands
+- Update dependencies
 
 ## [0.3.3](https://github.com/smartiniOnGitHub/fastify-nats/releases/tag/0.3.3) (2019-01-05)
 Summary Changelog:
