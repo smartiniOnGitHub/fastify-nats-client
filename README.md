@@ -56,8 +56,10 @@ all plugin options are optional, and have a default value set in the plugin.
 Default `url` for NATS Server in the plugin is set to `nats://demo.nats.io:4222`, 
 to be able to do a quick start; anyway note that in some cases it could not be reachable 
 (for example by corporate firewall rules), so even plugin tests could fail in that case.
-So even some custom commands using NATS Server Docker image from 
-[NATS - DockerHub](https://hub.docker.com/_/nats/) are provided.
+To perform some local tests, it's possible to use a NATS Server Docker image from standard image 
+[NATS - DockerHub](https://hub.docker.com/_/nats/); 
+for convenience, they are defined in `package.json` like `docker:nats:start` 
+and the same for `log|process|stop` etc.
 
 
 ## License

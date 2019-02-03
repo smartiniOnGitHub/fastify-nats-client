@@ -3,8 +3,11 @@
 ## [0.4.0](https://github.com/smartiniOnGitHub/fastify-nats/releases/tag/0.4.0) (unreleased)
 Summary Changelog:
 - Use official NATS Server Docker image for some (specific) local tests, 
-  and related npm custom commands
+  and related npm custom commands, all like `docker:nats:start` 
+  and the same for `log|process|stop` and maybe others (but later)
 - Update dependencies
+- No change of callbacks here (in standard format like 'function callback (err, data) { }'), 
+  because it seems not su useful here
 
 ## [0.3.3](https://github.com/smartiniOnGitHub/fastify-nats/releases/tag/0.3.3) (2019-01-05)
 Summary Changelog:

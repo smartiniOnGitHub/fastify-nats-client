@@ -4,6 +4,10 @@
   "description": "Fastify plugin for using NATS",
   "main": "src/plugin",
   "scripts": {
+    "docker:nats:start": "docker run -d --name=nats --rm -p 4222:4222 -p 8222:8222 nats",
+    "docker:nats:log": "docker logs --follow --tail=1000 nats",
+    "docker:nats:process": "docker ps --filter name=nats",
+    "docker:nats:stop": "docker kill nats",
     "example": "node example/example",
     "lint": "standard",
     "test:unit": "tap -J test/*.test.js test/*/*.test.js",
