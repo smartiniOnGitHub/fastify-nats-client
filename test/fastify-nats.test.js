@@ -13,14 +13,14 @@ test('fastify.nats should connect to default NATS server', t => {
   t.plan(3)
 
   const fastify = Fastify()
+  t.tearDown(fastify.close.bind(fastify))
+
   fastify.register(fastifyNats) // configure this plugin with its default options
 
   fastify.ready((err) => {
     t.error(err)
     t.ok(fastify.hasDecorator('nats'))
     t.ok(fastify.nats)
-
-    fastify.close()
   })
 })
 
@@ -28,6 +28,7 @@ test('fastify.nats should connect to the specified NATS server', t => {
   t.plan(3)
 
   const fastify = Fastify()
+  t.tearDown(fastify.close.bind(fastify))
 
   fastify.register(fastifyNats, natsOpt)
 
@@ -35,7 +36,5 @@ test('fastify.nats should connect to the specified NATS server', t => {
     t.error(err)
     t.ok(fastify.hasDecorator('nats'))
     t.ok(fastify.nats)
-
-    fastify.close()
   })
 })
