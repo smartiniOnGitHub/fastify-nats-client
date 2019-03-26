@@ -6,22 +6,29 @@ const Fastify = require('fastify')
 const fastifyNats = require('../')
 
 const natsOpt = {
-  url: 'nats://demo.nats.io:4222'
+  url: process.env.NATS_SERVER_URL || 'nats://demo.nats.io:4222'
 }
 
 test('fastify.nats should connect to default NATS server', t => {
-  t.plan(3)
+  if (process.env.NATS_SERVER_URL) {
+    t.plan(1)
+    t.comment('skipped test on plugin with its default options (which connects to NATS demo server)')
+    t.pass('test skipped, because env var NATS_SERVER_URL is defined')
+  } else {
+    t.plan(3)
 
-  const fastify = Fastify()
-  t.tearDown(fastify.close.bind(fastify))
+    const fastify = Fastify()
+    t.tearDown(fastify.close.bind(fastify))
 
-  fastify.register(fastifyNats) // configure this plugin with its default options
+    fastify.register(fastifyNats)
+    t.comment('configure the plugin with its default options, and connects to NATS demo server')
 
-  fastify.ready((err) => {
-    t.error(err)
-    t.ok(fastify.hasDecorator('nats'))
-    t.ok(fastify.nats)
-  })
+    fastify.ready((err) => {
+      t.error(err)
+      t.ok(fastify.hasDecorator('nats'))
+      t.ok(fastify.nats)
+    })
+  }
 })
 
 test('fastify.nats should connect to the specified NATS server', t => {
@@ -31,6 +38,7 @@ test('fastify.nats should connect to the specified NATS server', t => {
   t.tearDown(fastify.close.bind(fastify))
 
   fastify.register(fastifyNats, natsOpt)
+  t.comment(`configure the plugin with custom options, so NATS server URL is: ${natsOpt.url}`)
 
   fastify.ready((err) => {
     t.error(err)

@@ -18,6 +18,7 @@ k.message = `Hello World, from a Fastify web application just started at '${host
 // register plugin with all its options (as a sample)
 fastify.register(require('../src/plugin'), {
   // url: 'nats://demo.nats.io:4222' // same as plugin default, so no ned to specify here
+  url: process.env.NATS_SERVER_URL || 'nats://demo.nats.io:4222' // use from env var, or use the same as plugin default
 })
 fastify.after((err) => {
   if (err) {
@@ -66,16 +67,12 @@ function subscribe (nats,
     console.log(`Received message: ${msg}`)
   }) {
   console.log(`Subscribe to messages from the queue '${k.queueName}'`)
-  assert(fastify.nats !== null)
-
-  // simple subscriber
-  nats.subscribe(k.queueName, cb)
+  assert(nats !== null)
+  nats.subscribe(k.queueName, cb) // simple subscriber
 }
 
 function publish (nats, msg = '') {
   console.log(`Publish message in the queue '${k.queueName}'`)
-  assert(fastify.nats !== null)
-
-  // simple publisher
-  nats.publish(k.queueName, msg)
+  assert(nats !== null)
+  nats.publish(k.queueName, msg) // simple publisher
 }
