@@ -19,6 +19,7 @@ k.message = `Hello World, from a Fastify web application just started at '${host
 fastify.register(require('../src/plugin'), {
   // url: 'nats://demo.nats.io:4222' // same as plugin default, so no ned to specify here
   url: process.env.NATS_SERVER_URL || 'nats://demo.nats.io:4222' // use from env var, or use the same as plugin default
+  // disableDefaultNATSServer: true // sample, enable for a quick test here
 })
 fastify.after((err) => {
   if (err) {

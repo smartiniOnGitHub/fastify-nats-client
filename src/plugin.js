@@ -3,12 +3,24 @@
 const fp = require('fastify-plugin')
 const NATS = require('nats')
 
-const opts = {
-  url: 'nats://demo.nats.io:4222'
-}
+const defaultNATSServerURL = 'nats://demo.nats.io:4222'
 
 function fastifyNats (fastify, options, next) {
-  opts.url = options.url || opts.url
+  const {
+    disableDefaultNATSServer = false,
+    url = null
+  } = options
+
+  const opts = {}
+  if (url === null || url.length < 1) {
+    if (disableDefaultNATSServer === false) {
+      opts.url = defaultNATSServerURL
+    } else {
+      throw new Error('Must specify NATS Server URL, the default one is disabled')
+    }
+  } else {
+    opts.url = url
+  }
 
   const nats = NATS.connect(opts)
 

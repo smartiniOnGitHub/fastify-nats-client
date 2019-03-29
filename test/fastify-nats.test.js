@@ -1,5 +1,6 @@
 'use strict'
 
+// const assert = require('assert')
 const t = require('tap')
 const test = t.test
 const Fastify = require('fastify')
@@ -45,4 +46,28 @@ test('fastify.nats should connect to the specified NATS server', t => {
     t.ok(fastify.hasDecorator('nats'))
     t.ok(fastify.nats)
   })
+})
+
+test('fastify.nats should work if default NATS server has not been disabled (default, but forced here), and no URL provided', t => {
+  if (process.env.NATS_SERVER_URL) {
+    t.plan(1)
+    t.comment('skipped test on plugin with its default options (which connects to NATS demo server)')
+    t.pass('test skipped, because env var NATS_SERVER_URL is defined')
+  } else {
+    t.plan(3)
+
+    const fastify = Fastify()
+    t.tearDown(fastify.close.bind(fastify))
+
+    t.comment(`configure the plugin with custom options, do not disable Default NATS Server (same as default)`)
+    fastify.register(fastifyNats, {
+      disableDefaultNATSServer: false
+    })
+
+    fastify.ready((err) => {
+      t.error(err)
+      t.ok(fastify.hasDecorator('nats'))
+      t.ok(fastify.nats)
+    })
+  }
 })
