@@ -18,6 +18,7 @@ You can access the *nats Connection* via `fastify.nats`.
 ```js
 const fastify = require('fastify')
 
+// register the plugin with some options, for example:
 fastify.register(require('fastify-nats-client'), {
   url: 'nats://demo.nats.io:4222'
 }, err => {
@@ -45,22 +46,29 @@ plugin releases 2.x are for Fastify 2.x, etc.
 
 ## Note
 
-All the code here is base on the work done by its original author (mahmed8003 <mahmed8003@gmail.com>), 
-in the upstream repository [fastify-nats](https://github.com/mahmed8003/fastify-nats), under the MIT license.
+All the code here is based on the work done initially by its original author 
+(mahmed8003 <mahmed8003@gmail.com>), in the upstream repository 
+[fastify-nats](https://github.com/mahmed8003/fastify-nats), under the MIT license.
 
 The plugin decorate Fastify and expose some functions:
 - `nats`, the NATS Connection to use
 
-Plugin options are forwarder to [Node NATS](https://github.com/nats-io/node-nats) client, some are:
+Some plugin options are forwarder to [Node NATS](https://github.com/nats-io/node-nats) client, like:
 - `url`, the absolute URL of the NATS Server to use (including the port)
+while others are only used inside the plugin, to configure its behavior, like:
+- `disableDefaultNATSServer`, flag (by default false) to disable connections 
+  to default NATS Server (so if `url` is not specified, an Error will be raised);
+  could be useful to avoid connections to that (external and public) server, 
+  for example by plugin configuration mistake
 
 all plugin options are optional, and have a default value set in the plugin.
 
 Default `url` for NATS Server in the plugin is set to `nats://demo.nats.io:4222`, 
-to be able to do a quick start; anyway note that in some cases it could not be reachable 
-(for example by corporate firewall rules), so even plugin tests could fail in that case.
-To perform some local tests, it's possible to use a NATS Server Docker image from standard image 
-[NATS - DockerHub](https://hub.docker.com/_/nats/); 
+to be able to do a quick start; anyway note that in some cases it could not be 
+reachable (for example by corporate firewall rules), so even plugin tests could fail 
+in that case.
+To perform some local tests, it's possible to use a NATS Server Docker image from 
+standard image [NATS - DockerHub](https://hub.docker.com/_/nats/); 
 for convenience, they are defined in `package.json` like `docker:nats:start` 
 and the same for `log|process|stop` etc.
 
