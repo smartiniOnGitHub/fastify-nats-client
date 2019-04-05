@@ -40,6 +40,6 @@ function fastifyNats (fastify, options, next) {
 }
 
 module.exports = fp(fastifyNats, {
-  fastify: '^1.1.0',
+  fastify: '^2.1.0',
   name: 'fastify-nats-client'
 })
