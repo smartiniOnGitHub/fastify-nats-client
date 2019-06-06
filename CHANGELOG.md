@@ -1,5 +1,11 @@
 # Change Log
 
+## [2.1.0](https://github.com/smartiniOnGitHub/fastify-nats-client/releases/tag/2.1.0) (2019-06-06)
+[Full Changelog](https://github.com/smartiniOnGitHub/fastify-nats-client/compare/2.0.0...2.1.0)
+Summary Changelog:
+- Update all dependencies
+- Update Tap to latest, and small changes in tests
+
 ## [2.0.0](https://github.com/smartiniOnGitHub/fastify-nats-client/releases/tag/2.0.0) (2019-04-05)
 [Full Changelog](https://github.com/smartiniOnGitHub/fastify-nats-client/compare/1.0.0...2.0.0)
 Summary Changelog:

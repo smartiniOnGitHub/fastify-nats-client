@@ -39,8 +39,7 @@ fastify.nats.publish(topic, message);
 
 ## Requirements
 
-Fastify ^2.1.0 , Node.js 8.15.x or later.
-Note that plugin releases 2.x are for Fastify 2.x, etc.
+Fastify ^2.1.0 , Node.js 8.16.x or later.
 
 
 ## Note
