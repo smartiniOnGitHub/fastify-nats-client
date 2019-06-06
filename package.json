@@ -1,9 +1,10 @@
 {
   "name": "fastify-nats-client",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "Fastify plugin for using NATS",
   "main": "src/plugin",
   "scripts": {
+    "dependency:log": "npm list > ./temp/dependencies.log",
     "docker:nats:start": "docker run -d --name=nats --rm -p 4222:4222 -p 8222:8222 nats",
     "docker:nats:log": "docker logs --follow --tail=1000 nats",
     "docker:nats:process": "docker ps --filter name=nats",
@@ -12,22 +13,23 @@
     "example:docker": "npm run docker:nats:start && NATS_SERVER_URL=nats://localhost:4222 npm run example && npm run docker:nats:stop",
     "lint": "standard",
     "test:docker": "npm run docker:nats:start && NATS_SERVER_URL=nats://localhost:4222 npm run test:unit && npm run docker:nats:stop",
-    "test:unit": "tap -J --comments test/*.test.js test/*/*.test.js",
-    "test:unit:debug": "tap -T --strict --node-arg=--inspect-brk --comments test/*.test.js test/*/*.test.js",
+    "test:unit": "tap -J --comments --strict --no-esm test/*.test.js test/*.test.js",
+    "test:unit:debug": "tap -T --node-arg=--inspect-brk --comments --strict --no-esm test/*.test.js",
+    "test:coverage": "npm run test:unit -- --cov --coverage-report=html",
     "test": "npm run lint && npm run test:unit"
   },
   "dependencies": {
-    "fastify-plugin": "^1.5.0",
-    "nats": "^1.2.6"
+    "fastify-plugin": "^1.6.0",
+    "nats": "^1.2.10"
   },
   "devDependencies": {
     "fastify": "^2.1.0",
     "standard": "^12.0.1",
-    "tap": "^12.6.1"
+    "tap": "^14.2.2"
   },
   "peerDependencies": {},
   "engines": {
-    "node": ">=8.15.0"
+    "node": ">=8.16.0"
   },
   "homepage": "https://github.com/smartiniOnGitHub/fastify-nats-client#readme",
   "repository": {
