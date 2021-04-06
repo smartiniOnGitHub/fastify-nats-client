@@ -1,5 +1,15 @@
 # Change Log
 
+## [2.2.0](https://github.com/smartiniOnGitHub/fastify-nats-client/releases/tag/2.2.0) (2021-04-06)
+[Full Changelog](https://github.com/smartiniOnGitHub/fastify-nats-client/compare/2.1.0...2.2.0)
+Summary Changelog:
+- Update requirements to latest Fastify 2.x, so currently release '^2.15.3'
+- Feature: keep compatibility with Node.js 8 LTS (but this is last release)
+- Updated nats library to latest 1.x (next release will use 2.x)
+- Update all other dependencies
+- Update Tap to latest (major), and remove deprecated calls in tests
+- Add JSDoc to generate documentation from sources
+
 ## [2.1.0](https://github.com/smartiniOnGitHub/fastify-nats-client/releases/tag/2.1.0) (2019-06-06)
 [Full Changelog](https://github.com/smartiniOnGitHub/fastify-nats-client/compare/2.0.0...2.1.0)
 Summary Changelog:
