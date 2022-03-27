@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2021 the original author or authors.
+ * Copyright 2018-2022 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -55,6 +55,6 @@ function fastifyNats (fastify, options, next) {
 }
 
 module.exports = fp(fastifyNats, {
-  fastify: '^2.1.0',
+  fastify: '^2.12.0',
   name: 'fastify-nats-client'
 })

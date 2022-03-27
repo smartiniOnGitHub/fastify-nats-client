@@ -4,8 +4,7 @@
   [![NPM Downloads](https://img.shields.io/npm/dm/fastify-nats-client.svg?style=flat)](https://npmjs.org/package/fastify-nats-client/)
   [![Code Style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](http://standardjs.com/)
   [![Coverage Status](https://coveralls.io/repos/github/smartiniOnGitHub/fastify-nats-client/badge.svg?branch=master)](https://coveralls.io/github/smartiniOnGitHub/fastify-nats-client/?branch=master)
-  [![dependencies Status](https://david-dm.org/smartiniOnGitHub/fastify-nats-client/status.svg)](https://david-dm.org/smartiniOnGitHub/fastify-nats-client)
-  [![devDependencies Status](https://david-dm.org/smartiniOnGitHub/fastify-nats-client/dev-status.svg)](https://david-dm.org/smartiniOnGitHub/fastify-nats-client?type=dev)
+  [![license - MIT](https://img.shields.io/npm/l/fastify-nats-client.svg)](http://opensource.org/licenses/MIT)
 
 Fastify Plugin to use [NATS](http://nats.io) Server as a queue, to exchange messages.
 
@@ -39,8 +38,10 @@ fastify.nats.publish(topic, message);
 
 ## Requirements
 
-Fastify ^2.15.3 , Node.js 8.17.x (but recommended 10.23.1) or later.
-Note that plugin releases 2.x are for Fastify 2.x, etc.
+Fastify ^2.15.3 , Node.js 10 LTS (10.13.0) or later 
+(required by NATS libraries for js).
+
+Note that plugin releases 2.x are for Fastify 2.x, 3.x are for Fastify 3.x, etc.
 
 
 ## Sources
