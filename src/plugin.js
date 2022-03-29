@@ -20,29 +20,29 @@ const NATS = require('nats')
 
 const defaultNATSServerURL = 'nats://demo.nats.io:4222'
 
-function fastifyNats (fastify, options, next) {
+// TODO: check if async plugin is good for Fastify 2.x (current plugin) and 3.x ... wip
+// TODO: document the new option natsOptions ... wip
+async function fastifyNats (fastify, options, next) {
   const {
-    disableDefaultNATSServer = false,
-    url = null
+    disableDefaultNATSServer = false, // TODO: check if rename in enable (by default false) ... wip
+    natsOptions = {}
   } = options
 
-  const opts = {}
-  if (url === null || url.length < 1) {
+  if (natsOptions.servers === null || natsOptions.servers.length < 1) {
     if (disableDefaultNATSServer === false) {
-      opts.url = defaultNATSServerURL
+      natsOptions.servers = defaultNATSServerURL
     } else {
-      throw new Error('Must specify NATS Server URL, the default one is disabled')
+      throw new Error(`Must specify NATS Server/s URL, the default one (${defaultNATSServerURL}) is disabled`)
     }
-  } else {
-    opts.url = url
   }
 
-  const nats = NATS.connect(opts)
+  const nats = await NATS.connect(natsOptions)
 
   nats.on('connect', (nc) => {
     fastify.decorate('nats', nats)
-    fastify.addHook('onClose', (instance, done) => {
-      instance.nats.close()
+    fastify.addHook('onClose', async (instance, done) => {
+      await nats.flush()
+      await nats.close()
       done()
     })
 
