@@ -90,7 +90,8 @@ fastify.ready((err) => {
 
 // subscribe to an hardcoded queue (subject) with the given nats connection
 // and get a text message, then unsubscribe after 1 message (if enabled)
-function subscribe (nc,
+// it must be an async function
+async function subscribe (nc,
   cb = function (err, msg) {
     console.log(`Received message: (${err}, ${msg})`)
     if (err) {
@@ -102,15 +103,34 @@ function subscribe (nc,
   }) {
   console.log(`Subscribe to the queue '${k.queueName}'`)
   assert(nc !== null)
+  assert(cb !== null)
+
+  /*
   // simple subscriber with a callback
-  nc.subscribe(k.queueName, cb, {
+  nc.subscribe(k.queueName, { callback: cb }, {
     // max: 1 // after 1 message, auto-unsubscribe from the subject
   })
+   */
+
+  // use the recommended way ...
+
+  // example iterator subscription
+  const sub = nc.subscribe(k.queueName, {
+    // max: 1 // after 1 message, auto-unsubscribe from the subject
+  })
+  const sc = fastify.NATS.StringCodec() // codec for a string message
+  for await (const m of sub) {
+    const decoded = sc.decode(m.data)
+    console.log(`Message received from async iterator, decoded: '${decoded}'`)
+  }
+
+  // etc ...
 }
 
 // publish a text message in the given nats connection
 // the queue (subject) is hardcoded
-function publish (nc, msg = '') {
+// it's an async function, but it's not mandatory
+async function publish (nc, msg = '') {
   console.log(`Publish message in the queue '${k.queueName}'`)
   assert(nc !== null)
   const sc = fastify.NATS.StringCodec() // codec for a string message

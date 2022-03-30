@@ -51,7 +51,7 @@ function fastifyNats (fastify, options, next) {
     }
   }
 
-  // TODO: try to wrap in an async function, not the whole plugin (or it won't be compatible with Fastify 2.x) ... now ensure it works in the right way ... wip
+  // TODO: try to wrap in an async function, not the whole plugin (or it won't be compatible with Fastify 2.x) ... now ensure it works in the right way ... ok, then simplify in Fastify 3.x ...
   // wrap NATS-related async stuff
   natsWrapper(fastify, natsOptions, next).then(result => {
     fastify.log.info(`NATS async wrapper inside the plugin, received result: ${result}`)
