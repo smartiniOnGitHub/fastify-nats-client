@@ -15,14 +15,29 @@
  */
 'use strict'
 
+// const assert = require('assert').strict
 const fp = require('fastify-plugin')
 const NATS = require('nats')
 
 const defaultNATSServerURL = 'nats://demo.nats.io:4222'
 
-// TODO: check if async plugin is good for Fastify 2.x (current plugin) and 3.x ... wip
-// TODO: document the new option natsOptions ... wip
-async function fastifyNats (fastify, options, next) {
+// async function to wrap NATS-related stuff
+async function natsWrapper (fastify, natsOptions, next) {
+  const nc = await NATS.connect(natsOptions)
+
+  fastify.decorate('NATS', NATS)
+  fastify.decorate('nc', nc)
+
+  fastify.addHook('onClose', async (instance, done) => {
+    await nc.flush()
+    await nc.close()
+    done()
+  })
+
+  next()
+}
+
+function fastifyNats (fastify, options, next) {
   const {
     disableDefaultNATSServer = false, // TODO: check if rename in enable (by default false) ... wip
     natsOptions = {}
@@ -36,21 +51,14 @@ async function fastifyNats (fastify, options, next) {
     }
   }
 
-  const nats = await NATS.connect(natsOptions)
-
-  nats.on('connect', (nc) => {
-    fastify.decorate('nats', nats)
-    fastify.addHook('onClose', async (instance, done) => {
-      await nats.flush()
-      await nats.close()
-      done()
-    })
-
-    next()
-  })
-
-  nats.on('error', (err) => {
-    next(err)
+  // TODO: try to wrap in an async function, not the whole plugin (or it won't be compatible with Fastify 2.x) ... now ensure it works in the right way ... wip
+  // wrap NATS-related async stuff
+  natsWrapper(fastify, natsOptions, next).then(result => {
+    fastify.log.info(`NATS async wrapper inside the plugin, received result: ${result}`)
+    // assert(fastify.NATS !== null) // to ensure all is good
+    // assert(fastify.nc !== null) // to ensure all is good
+  }).catch(error => {
+    fastify.log.error(`NATS async wrapper inside the plugin, error: ${error}`)
   })
 }
 
