@@ -15,34 +15,43 @@
  */
 'use strict'
 
-const hostname = require('os').hostname()
 const assert = require('assert').strict
-const fastify = require('fastify')()
+const hostname = require('os').hostname()
+const fastify = require('fastify')({
+  logger: true
+})
+// const NATS = require('nats')
 
 const pluginName = require('../package.json').name // get plugin name
 const pluginVersion = require('../package.json').version // get plugin version
 const k = {
   protocol: 'http',
-  address: '127.0.0.1',
-  port: 3000
+  address: '0.0.0.0',
+  port: 3000,
 }
 // k.serverUrl = `${k.protocol}://${k.address}:${k.port}/`
+
+k.natsDemoServer ='nats://demo.nats.io:4222'
+k.natsOptions = {
+  // servers: k.natsDemoServer // same as plugin default, so no ned to specify here
+  servers: process.env.NATS_SERVER_URL || k.natsDemoServer // use from env var, or use the same as plugin default
+}
 k.queueName = `${pluginName}-${pluginVersion}`
 k.message = `Hello World, from a Fastify web application just started at '${hostname}'!`
 
 // register plugin with all its options (as a sample)
 fastify.register(require('../src/plugin'), {
-  // url: 'nats://demo.nats.io:4222' // same as plugin default, so no ned to specify here
-  url: process.env.NATS_SERVER_URL || 'nats://demo.nats.io:4222' // use from env var, or use the same as plugin default
-  // disableDefaultNATSServer: true // sample, enable for a quick test here
+  // disableDefaultNATSServer: true, // sample, enable for a quick test here
+  natsOptions: k.natsOptions
 })
 fastify.after((err) => {
   if (err) {
     console.log(err)
   }
-  assert(fastify.nats !== null) // example
-  if (fastify.nats !== null) {
-    console.log(`Connected to the queue at: '${fastify.nats.currentServer.url.href}'`)
+  assert(fastify.NATS !== null) // example
+  assert(fastify.nc !== null) // example
+  if (fastify.nc !== null) {
+    console.log(`Connected to the queue at: '${k.natsOptions.servers}'`)
   }
 })
 
@@ -55,7 +64,7 @@ fastify.get('/', function (req, reply) {
   reply.type('text/html; charset=utf-8').send(stream)
 
   // publish a message in the queue, as a sample
-  publish(fastify.nats, `Hello World, from the root page of a Fastify web application at '${hostname}'!`)
+  publish(fastify.nc, `Hello World, from the root page of a Fastify web application at '${hostname}'!`)
 })
 
 fastify.listen(k.port, k.address, (err, address) => {
@@ -73,22 +82,37 @@ fastify.ready((err) => {
   console.log(`Available Routes:\n${routes}`)
 
   // subscribe and publish a message to the queue, as a sample
-  assert(fastify.nats !== null)
-  subscribe(fastify.nats)
-  publish(fastify.nats, k.message)
+  assert(fastify.NATS !== null)
+  assert(fastify.nc !== null)
+  subscribe(fastify.nc)
+  publish(fastify.nc, 'Plugin ready')
 })
 
-function subscribe (nats,
-  cb = function (msg) {
-    console.log(`Received message: ${msg}`)
+// subscribe to an hardcoded queue (subject) with the given nats connection
+// and get a text message, then unsubscribe after 1 message (if enabled)
+function subscribe (nc,
+  cb = function (err, msg) {
+    console.log(`Received message: (${err}, ${msg})`)
+    if (err) {
+      console.error(err.message)
+    } else {
+      const sc = fastify.NATS.StringCodec() // codec for a string message
+      console.log(`Message received, decoded: '${sc.decode(msg.data)}'`)
+    }
   }) {
-  console.log(`Subscribe to messages from the queue '${k.queueName}'`)
-  assert(nats !== null)
-  nats.subscribe(k.queueName, cb) // simple subscriber
+  console.log(`Subscribe to the queue '${k.queueName}'`)
+  assert(nc !== null)
+  // simple subscriber with a callback
+  nc.subscribe(k.queueName, cb, {
+    // max: 1 // after 1 message, auto-unsubscribe from the subject
+  })
 }
 
-function publish (nats, msg = '') {
+// publish a text message in the given nats connection
+// the queue (subject) is hardcoded
+function publish (nc, msg = '') {
   console.log(`Publish message in the queue '${k.queueName}'`)
-  assert(nats !== null)
-  nats.publish(k.queueName, msg) // simple publisher
+  assert(nc !== null)
+  const sc = fastify.NATS.StringCodec() // codec for a string message
+  nc.publish(k.queueName, sc.encode(msg)) // simple publisher
 }
