@@ -10,6 +10,9 @@ Summary Changelog:
   see [Migration - NATS.js](https://github.com/nats-io/nats.js/blob/main/migration.md)
 - Breaking change: changed plugin options, addd 'natsOptions' as NATS general 
   connection option object (and removed the 'url' option)
+- Breaking change: changed plugin decorator items exposed
+  (and removed the 'nats' decorator), see the README for more info; 
+  this is to better align with NATS.js sources and examples
 - Note: this is last release for Fastify 2.x
 
 ## [2.2.0](https://github.com/smartiniOnGitHub/fastify-nats-client/releases/tag/2.2.0) (2021-04-06)

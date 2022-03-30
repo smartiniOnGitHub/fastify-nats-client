@@ -8,20 +8,22 @@
 
 Fastify Plugin to use [NATS](http://nats.io) Server as a queue, to exchange messages.
 
-Under the hood [Node NATS](https://github.com/nats-io/node-nats) client is used, the options that you pass to `register` will be passed to the nats client.
+Under the hood [nats.js](https://github.com/nats-io/nats.js) library is used; 
+the plugin has some options (to set in the `register`), 
+some will be sent to the nats library for connection details etc.
 
 
 ## Usage
 Add it to you project with `register` and you are done!  
-You can access the *nats Connection* via `fastify.nats`.
+You can access the *nats Connection* via `fastify.nc`.
+Note that even the *NATS library* is exposed at `fastify.NATS` but only 
+as a convenience (to avoid refer to it directly as a Node.js library).
 ```js
 const fastify = require('fastify')
 
 // register the plugin with some options, for example:
 fastify.register(require('fastify-nats-client'), {
-  url: 'nats://demo.nats.io:4222'
-}, err => {
-  if (err) throw err
+  natsOptions: 'nats://demo.nats.io:4222'
 })
 
 fastify.listen(3000, (err, address) => {
@@ -32,8 +34,23 @@ fastify.listen(3000, (err, address) => {
 
 and later
 ```js
-fastify.nats.publish(topic, message);
+// get some NATS-related facilities
+const nc = fastify.nc // get the NATS Connection with servers
+const sc = fastify.NATS.StringCodec() // codec for a string message
+const jc = fastify.NATS.JSONCodec() // codec for a JSON string message
+// const subject = fastify.NATS.createInbox() // sample queue name
+// publish/subscribe, example
+nc.publish(queueName, sc.encode(msg)) // simple publisher for a string message
+nc.publish(queueName, jc.encode(obj)) // simple publisher for a JSON message
+nc.subscribe( ... ) // use an async iterator or a callback
+// etc ...
 ```
+
+In the [example](./example/) folder there is a simple server scripts that
+uses the plugin (inline but it's the same using it from npm registry).
+
+As you can see, the NATS.js library is complex and with a lot of features, 
+please refer to its documentation and sources for more info and examples.
 
 
 ## Requirements
@@ -60,7 +77,9 @@ All the code here is based on the work done initially by its original author
 [fastify-nats](https://github.com/mahmed8003/fastify-nats), under the MIT license.
 
 The plugin decorate Fastify and expose some functions:
-- `nats`, the NATS Connection to use
+- `NATS`, a reference to the NATS library, but only as a convenience
+- `nc`, the NATS Connection to use; 
+  even if a little criptic, I used those names to better align with NATS.js sources and examples
 
 Some plugin options are sent directly to 
 [NATS.js - NATS-io - GitHub](https://github.com/nats-io/node-nats) library, like:
