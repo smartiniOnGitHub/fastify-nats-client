@@ -100,7 +100,7 @@ async function subscribe (nc,
       const sc = fastify.NATS.StringCodec() // codec for a string message
       console.log(`Message received, decoded: '${sc.decode(msg.data)}'`)
     }
-  }) {
+  }, dec = fastify.NATS.StringCodec()) {
   console.log(`Subscribe to the queue '${k.queueName}'`)
   assert(nc !== null)
   assert(cb !== null)
@@ -118,9 +118,8 @@ async function subscribe (nc,
   const sub = nc.subscribe(k.queueName, {
     // max: 1 // after 1 message, auto-unsubscribe from the subject
   })
-  const sc = fastify.NATS.StringCodec() // codec for a string message
   for await (const m of sub) {
-    const decoded = sc.decode(m.data)
+    const decoded = dec.decode(m.data)
     console.log(`Message received from async iterator, decoded: '${decoded}'`)
   }
 
@@ -130,9 +129,8 @@ async function subscribe (nc,
 // publish a text message in the given nats connection
 // the queue (subject) is hardcoded
 // it's an async function, but it's not mandatory
-async function publish (nc, msg = '') {
+async function publish (nc, msg = '', enc = fastify.NATS.StringCodec()) {
   console.log(`Publish message in the queue '${k.queueName}'`)
   assert(nc !== null)
-  const sc = fastify.NATS.StringCodec() // codec for a string message
-  nc.publish(k.queueName, sc.encode(msg)) // simple publisher
+  nc.publish(k.queueName, enc.encode(msg)) // simple publisher
 }
