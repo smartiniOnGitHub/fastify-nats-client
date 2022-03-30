@@ -30,7 +30,8 @@ async function natsWrapper (fastify, natsOptions, next) {
 
   fastify.addHook('onClose', async (instance, done) => {
     await nc.flush()
-    await nc.close()
+    // await nc.close()
+    await nc.drain()
     done()
   })
 
@@ -51,8 +52,8 @@ function fastifyNats (fastify, options, next) {
     }
   }
 
-  // TODO: try to wrap in an async function, not the whole plugin (or it won't be compatible with Fastify 2.x) ... now ensure it works in the right way ... ok, then simplify in Fastify 3.x ...
   // wrap NATS-related async stuff
+  // simplify in Fastify 3.x, with async plugins available ...
   natsWrapper(fastify, natsOptions, next).then(result => {
     fastify.log.info(`NATS async wrapper inside the plugin, received result: ${result}`)
     // assert(fastify.NATS !== null) // to ensure all is good
