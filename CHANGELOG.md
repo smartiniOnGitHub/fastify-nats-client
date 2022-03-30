@@ -4,9 +4,12 @@
 [Full Changelog](https://github.com/smartiniOnGitHub/fastify-nats-client/compare/2.2.0...2.10.0)
 Summary Changelog:
 - Update requirements to latest Fastify 2.x, so currently release '^2.15.3'
-- Updated nats library to latest 2.x (with breaking changes with previous), 
-  with related requirements of Node.js 10 LTS
 - Update all other dependencies
+- Breaking change: updated NATS library to latest 2.x 
+  (with breaking changes with previous version), which requires Node.js 10 LTS; 
+  see [Migration - NATS.js](https://github.com/nats-io/nats.js/blob/main/migration.md)
+- Breaking change: changed plugin options, addd 'natsOptions' as NATS general 
+  connection option object (and removed the 'url' option)
 - Note: this is last release for Fastify 2.x
 
 ## [2.2.0](https://github.com/smartiniOnGitHub/fastify-nats-client/releases/tag/2.2.0) (2021-04-06)
