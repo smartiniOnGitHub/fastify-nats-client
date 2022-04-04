@@ -18,63 +18,68 @@
 // test NATS by using features exposed by the plugin
 // in corporate networks could not work, due to some firewall (blocking) policies
 
-/*
 // const assert = require('assert').strict
 const t = require('tap')
 const test = t.test
 const Fastify = require('fastify')
 const fastifyNats = require('../')
-
-const natsOpt = {
-  url: process.env.NATS_SERVER_URL || 'nats://demo.nats.io:4222'
+const fastifyNatsOptions = {
+  enableDefaultNATSServer: true, // sample, to connect by default to public demo server
+  drainOnClose: true // sample, to drain last messages at plugin close
 }
+
+const natsOpts = {
+  servers: process.env.NATS_SERVER_URL || 'nats://demo.nats.io:4222'
+}
+console.log(`NATS demo server (public) URL: ${natsOpts.servers}`)
 
 test('fastify.nats should connect to default NATS server', t => {
   if (process.env.NATS_SERVER_URL) {
-    t.plan(1)
     t.comment('skipped test on plugin with its default options (which connects to NATS demo server)')
     t.pass('test skipped, because env var NATS_SERVER_URL is defined')
   } else {
-    t.plan(3)
-
     const fastify = Fastify()
     t.teardown(fastify.close.bind(fastify))
 
-    fastify.register(fastifyNats)
+    fastify.register(fastifyNats, fastifyNatsOptions)
     t.comment('configure the plugin with its default options, and connects to NATS demo server')
 
     fastify.ready((err) => {
       t.error(err)
-      t.ok(fastify.hasDecorator('nats'))
-      t.ok(fastify.nats)
+      t.ok(fastify.hasDecorator('NATS'))
+      t.ok(fastify.NATS)
+      t.ok(fastify.hasDecorator('nc'))
+      t.ok(fastify.nc)
+      t.end()
     })
   }
 })
 
+/*
 test('fastify.nats should connect to the specified NATS server', t => {
-  t.plan(3)
-
   const fastify = Fastify()
   t.teardown(fastify.close.bind(fastify))
 
-  fastify.register(fastifyNats, natsOpt)
+  fastify.register(fastifyNats, {
+    // TODO: use natsOpts ...
+  })
   t.comment(`configure the plugin with custom options, so NATS server URL is: ${natsOpt.url}`)
 
   fastify.ready((err) => {
     t.error(err)
-    t.ok(fastify.hasDecorator('nats'))
-    t.ok(fastify.nats)
+    t.ok(fastify.hasDecorator('NATS'))
+    t.ok(fastify.NATS)
+    t.ok(fastify.hasDecorator('nc'))
+    t.ok(fastify.nc)
+    t.end()
   })
 })
 
 test('fastify.nats should work if default NATS server has not been disabled (default, but forced here), and no URL provided', t => {
   if (process.env.NATS_SERVER_URL) {
-    t.plan(1)
     t.comment('skipped test on plugin with its default options (which connects to NATS demo server)')
     t.pass('test skipped, because env var NATS_SERVER_URL is defined')
   } else {
-    t.plan(3)
-
     const fastify = Fastify()
     t.teardown(fastify.close.bind(fastify))
 
@@ -85,8 +90,11 @@ test('fastify.nats should work if default NATS server has not been disabled (def
 
     fastify.ready((err) => {
       t.error(err)
-      t.ok(fastify.hasDecorator('nats'))
-      t.ok(fastify.nats)
+      t.ok(fastify.hasDecorator('NATS'))
+      t.ok(fastify.NATS)
+      t.ok(fastify.hasDecorator('nc'))
+      t.ok(fastify.nc)
+      t.end()
     })
   }
 })
