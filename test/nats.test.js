@@ -29,9 +29,9 @@ const natsDemoPort = 4222
 const natsDemoTlsPort = 4443
 
 const natsOpts = {
-  url: process.env.NATS_SERVER_URL || `nats://${natsDemoHost}:${natsDemoPort}`
+  servers: process.env.NATS_SERVER_URL || `nats://${natsDemoHost}:${natsDemoPort}`
 }
-console.log(`NATS demo server (public) URL: ${natsOpts.url}`)
+console.log(`NATS demo server (public) URL: ${natsOpts.servers}`)
 
 async function natsConnectAndClose (natsOptions) {
   const nc = await NATS.connect(natsOptions)
