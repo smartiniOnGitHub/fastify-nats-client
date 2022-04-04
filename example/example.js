@@ -27,31 +27,33 @@ const pluginVersion = require('../package.json').version // get plugin version
 const k = {
   protocol: 'http',
   address: '0.0.0.0',
-  port: 3000,
+  port: 3000
 }
 // k.serverUrl = `${k.protocol}://${k.address}:${k.port}/`
 
-k.natsDemoServer ='nats://demo.nats.io:4222'
+k.natsDemoServer = 'nats://demo.nats.io:4222'
 k.natsOptions = {
   // servers: k.natsDemoServer // same as plugin default, so no ned to specify here
-  servers: process.env.NATS_SERVER_URL || k.natsDemoServer // use from env var, or use the same as plugin default
+  // servers: process.env.NATS_SERVER_URL || k.natsDemoServer // use from env var, or use the same as plugin default
+  servers: process.env.NATS_SERVER_URL // use from env var, or use NATS demo if plugin option is enabled
 }
 k.queueName = `${pluginName}-${pluginVersion}`
 k.message = `Hello World, from a Fastify web application just started at '${hostname}'!`
 
 // register plugin with all its options (as a sample)
 fastify.register(require('../src/plugin'), {
-  // disableDefaultNATSServer: true, // sample, enable for a quick test here
+  enableDefaultNATSServer: true, // sample, to connect by default to public demo server
+  drainOnClose: true, // sample, to drain last messages at plugin close
   natsOptions: k.natsOptions
 })
 fastify.after((err) => {
   if (err) {
     console.log(err)
   }
-  assert(fastify.NATS !== null) // example
-  assert(fastify.nc !== null) // example
+  assert(fastify.NATS !== null) // ensure library is available
+  assert(fastify.nc !== null) // ensure connection is available
   if (fastify.nc !== null) {
-    console.log(`Connected to the queue at: '${k.natsOptions.servers}'`)
+    console.log(`Connected to queue server at: '${k.natsOptions.servers}'`)
   }
 })
 

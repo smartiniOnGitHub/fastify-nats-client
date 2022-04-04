@@ -86,10 +86,13 @@ Some plugin options are sent directly to
 - `natsOptions`, general connetion options for the NATS Server, 
   see [Changed configuration properties - NATS.js](https://github.com/nats-io/nats.js/blob/main/migration.md#changed-configuration-properties)
 while others are only used inside the plugin, to configure its behavior, like:
-- `disableDefaultNATSServer`, flag (by default false) to disable connections 
-  to default NATS Server (so if a NATS server is not specified, 
-  an Error will be raised);
-  could be useful to avoid connections to that (external and public) server, 
+- `drainOnClose`, flag (by default false) to enable the drain of 
+  last data from the NATS connection when the plugin has to close 
+- `enableDefaultNATSServer`, flag (by default false) to enable connections 
+  to public NATS Demo Server (so if a NATS server is not specified 
+  and this flag is disabled an Error will be raised), 
+  useful for a fast start on tests and examples;
+  default setting is to avoid connections to that (external and public) server, 
   for example by plugin configuration mistake
 
 all plugin options are optional and have a default value set in the plugin.

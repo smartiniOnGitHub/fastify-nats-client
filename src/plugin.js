@@ -22,16 +22,20 @@ const NATS = require('nats')
 const defaultNATSServerURL = 'nats://demo.nats.io:4222'
 
 // async function to wrap NATS-related stuff
-async function natsWrapper (fastify, natsOptions, next) {
+async function natsWrapper (fastify, options = {}, natsOptions, next) {
   const nc = await NATS.connect(natsOptions)
 
   fastify.decorate('NATS', NATS)
   fastify.decorate('nc', nc)
 
   fastify.addHook('onClose', async (instance, done) => {
-    await nc.flush()
-    // await nc.close()
-    await nc.drain()
+    if (options.drainOnClose === true) {
+      await nc.drain()
+    } else {
+      await nc.flush()
+      await nc.close()
+    }
+
     done()
   })
 
@@ -40,12 +44,14 @@ async function natsWrapper (fastify, natsOptions, next) {
 
 function fastifyNats (fastify, options, next) {
   const {
-    disableDefaultNATSServer = false, // TODO: check if rename in enable (by default false) ... wip
+    enableDefaultNATSServer = false,
+    // drainOnClose = false, // commented because not used directly here
     natsOptions = {}
   } = options
 
-  if (natsOptions.servers === null || natsOptions.servers.length < 1) {
-    if (disableDefaultNATSServer === false) {
+  if (natsOptions.servers === undefined || natsOptions.servers === null ||
+    natsOptions.servers.length < 1) {
+    if (enableDefaultNATSServer === true) {
       natsOptions.servers = defaultNATSServerURL
     } else {
       throw new Error(`Must specify NATS Server/s URL, the default one (${defaultNATSServerURL}) is disabled`)
@@ -54,7 +60,7 @@ function fastifyNats (fastify, options, next) {
 
   // wrap NATS-related async stuff
   // simplify in Fastify 3.x, with async plugins available ...
-  natsWrapper(fastify, natsOptions, next).then(result => {
+  natsWrapper(fastify, options, natsOptions, next).then(result => {
     fastify.log.info(`NATS async wrapper inside the plugin, received result: ${result}`)
     // assert(fastify.NATS !== null) // to ensure all is good
     // assert(fastify.nc !== null) // to ensure all is good

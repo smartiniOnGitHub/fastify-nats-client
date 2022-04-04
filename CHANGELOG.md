@@ -8,11 +8,18 @@ Summary Changelog:
 - Breaking change: updated NATS library to latest 2.x 
   (with breaking changes with previous version), which requires Node.js 10 LTS; 
   see [Migration - NATS.js](https://github.com/nats-io/nats.js/blob/main/migration.md)
-- Breaking change: changed plugin options, addd 'natsOptions' as NATS general 
+- Breaking change: changed plugin options, add 'natsOptions' as NATS general 
   connection option object (and removed the 'url' option)
+- Breaking change: renamed plugin option 'disableDefaultNATSServer' to
+  'enableDefaultNATSServer' (but keep same default value, false); 
+  mainly to avoid connections to that (external and public) server
+  by mistake
 - Breaking change: changed plugin decorator items exposed
   (and removed the 'nats' decorator), see the README for more info; 
   this is to better align with NATS.js sources and examples
+- Add a new plugin option, 'drainOnClose' (by default false) 
+  to enable drain of NATS connection at plugin close, 
+  otherwise usual flush and close of the connection will be performed
 - Note: this is last release for Fastify 2.x
 
 ## [2.2.0](https://github.com/smartiniOnGitHub/fastify-nats-client/releases/tag/2.2.0) (2021-04-06)
