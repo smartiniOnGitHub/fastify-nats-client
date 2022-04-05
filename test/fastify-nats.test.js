@@ -26,6 +26,7 @@ const fastifyNats = require('../')
 const fastifyNatsOptions = {
   enableDefaultNATSServer: true, // sample, to connect by default to public demo server
   drainOnClose: true // sample, to drain last messages at plugin close
+  // natsOptions: natsOpts // sample, but not needed with current settings
 }
 
 const natsOpts = {
@@ -33,7 +34,7 @@ const natsOpts = {
 }
 console.log(`NATS demo server (public) URL: ${natsOpts.servers}`)
 
-test('fastify.nats should connect to default NATS server', t => {
+test('fastify.nats should connect to default (demo) NATS server', t => {
   if (process.env.NATS_SERVER_URL) {
     t.comment('skipped test on plugin with its default options (which connects to NATS demo server)')
     t.pass('test skipped, because env var NATS_SERVER_URL is defined')
@@ -42,7 +43,7 @@ test('fastify.nats should connect to default NATS server', t => {
     t.teardown(fastify.close.bind(fastify))
 
     fastify.register(fastifyNats, fastifyNatsOptions)
-    t.comment('configure the plugin with its default options, and connects to NATS demo server')
+    t.comment('configure the plugin with only some override to its default options, and connects to NATS demo server')
 
     fastify.ready((err) => {
       t.error(err)
@@ -55,15 +56,14 @@ test('fastify.nats should connect to default NATS server', t => {
   }
 })
 
-/*
 test('fastify.nats should connect to the specified NATS server', t => {
   const fastify = Fastify()
   t.teardown(fastify.close.bind(fastify))
 
   fastify.register(fastifyNats, {
-    // TODO: use natsOpts ...
+    natsOptions: natsOpts
   })
-  t.comment(`configure the plugin with custom options, so NATS server URL is: ${natsOpt.url}`)
+  t.comment(`configure the plugin with custom options, NATS servers is: ${natsOpts.servers}`)
 
   fastify.ready((err) => {
     t.error(err)
@@ -75,7 +75,7 @@ test('fastify.nats should connect to the specified NATS server', t => {
   })
 })
 
-test('fastify.nats should work if default NATS server has not been disabled (default, but forced here), and no URL provided', t => {
+test('fastify.nats should work if default (demo) NATS server has been enabled (forced here), and no URL provided', t => {
   if (process.env.NATS_SERVER_URL) {
     t.comment('skipped test on plugin with its default options (which connects to NATS demo server)')
     t.pass('test skipped, because env var NATS_SERVER_URL is defined')
@@ -83,9 +83,9 @@ test('fastify.nats should work if default NATS server has not been disabled (def
     const fastify = Fastify()
     t.teardown(fastify.close.bind(fastify))
 
-    t.comment('configure the plugin with custom options, do not disable Default NATS Server (same as default)')
+    t.comment('configure the plugin with custom options, enable default NATS Server (override default setting)')
     fastify.register(fastifyNats, {
-      disableDefaultNATSServer: false
+      enableDefaultNATSServer: true
     })
 
     fastify.ready((err) => {
@@ -98,4 +98,41 @@ test('fastify.nats should work if default NATS server has not been disabled (def
     })
   }
 })
-*/
+
+test('fastify.nats should not work if default (demo) NATS server has not been enabled and no URL provided', (t) => {
+  if (process.env.NATS_SERVER_URL) {
+    t.comment('skipped test on plugin with its default options (which connects to NATS demo server)')
+    t.pass('test skipped, because env var NATS_SERVER_URL is defined')
+  } else {
+    const fastify = Fastify()
+    t.teardown(fastify.close.bind(fastify))
+
+    t.comment('configure the plugin with only default options, do not enable default NATS Server (same as default)')
+    fastify.register(fastifyNats, {
+      // enableDefaultNATSServer: false // same as default
+    // })
+    // optional, add even some tests in the after
+    // all works even without these tests, but it's a good example
+    // note that here I need to make this error fatal, see at the end of code block
+    }).after((err, instance, done) => {
+      // console.log('error: ' + err)
+      t.ok(err) // expect an error here
+      // if (err) throw err // not here
+      // done() // discard the error in the plugin and continue execution
+      done(err) // fatal error, do not discard
+    })
+
+    fastify.ready((err) => {
+      // console.log('error: ' + err)
+      t.ok(err) // expect an error here
+      t.pass()
+
+      t.notOk(fastify.hasDecorator('NATS'))
+      t.notOk(fastify.NATS)
+      t.notOk(fastify.hasDecorator('nc'))
+      t.notOk(fastify.nc)
+
+      t.end()
+    })
+  }
+})

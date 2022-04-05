@@ -54,7 +54,7 @@ function fastifyNats (fastify, options, next) {
     if (enableDefaultNATSServer === true) {
       natsOptions.servers = defaultNATSServerURL
     } else {
-      throw new Error(`Must specify NATS Server/s URL, the default one (${defaultNATSServerURL}) is disabled`)
+      next(new Error(`Must specify NATS Server/s URL, the default one (${defaultNATSServerURL}) is disabled`))
     }
   }
 
