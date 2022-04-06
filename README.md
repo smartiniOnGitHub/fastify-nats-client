@@ -55,8 +55,7 @@ please refer to its documentation and sources for more info and examples.
 
 ## Requirements
 
-Fastify ^2.15.3 , Node.js 10 LTS (10.13.0) or later 
-(required by NATS libraries for js).
+Fastify ^3.3.0 , Node.js 10 LTS (10.13.0) or later.
 
 Note that plugin releases 2.x are for Fastify 2.x, 3.x are for Fastify 3.x, etc.
 

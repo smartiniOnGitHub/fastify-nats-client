@@ -1,5 +1,12 @@
 # Change Log
 
+## [3.0.0](https://github.com/smartiniOnGitHub/fastify-nats-client/releases/tag/3.0.0) (unreleased)
+[Full Changelog](https://github.com/smartiniOnGitHub/fastify-nats-client/compare/2.10.0...3.0.0)
+Summary Changelog:
+- Update requirements to latest Fastify 3.x and Node.js 10 LTS
+- Ensure all works again
+- Note: this plugin release has same features of previous release
+
 ## [2.10.0](https://github.com/smartiniOnGitHub/fastify-nats-client/releases/tag/2.10.0) (2022-04-06)
 [Full Changelog](https://github.com/smartiniOnGitHub/fastify-nats-client/compare/2.2.0...2.10.0)
 Summary Changelog:
