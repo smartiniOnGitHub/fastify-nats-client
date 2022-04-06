@@ -5,6 +5,7 @@
 Summary Changelog:
 - Update requirements to latest Fastify 3.x and Node.js 10 LTS
 - Ensure all works again
+- Update license from MIT to APACHE-2.0 (they are compatible)
 - Note: this plugin release has same features of previous release
 
 ## [2.10.0](https://github.com/smartiniOnGitHub/fastify-nats-client/releases/tag/2.10.0) (2022-04-06)

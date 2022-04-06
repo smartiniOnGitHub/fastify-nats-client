@@ -56,5 +56,5 @@
     "nats"
   ],
   "author": "Sandro Martini <sandro.martini@gmail.com>",
-  "license": "MIT"
+  "license": "Apache-2.0"
 }

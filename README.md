@@ -4,7 +4,7 @@
   [![NPM Downloads](https://img.shields.io/npm/dm/fastify-nats-client.svg?style=flat)](https://npmjs.org/package/fastify-nats-client/)
   [![Code Style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](http://standardjs.com/)
   [![Coverage Status](https://coveralls.io/repos/github/smartiniOnGitHub/fastify-nats-client/badge.svg?branch=master)](https://coveralls.io/github/smartiniOnGitHub/fastify-nats-client/?branch=master)
-  [![license - MIT](https://img.shields.io/npm/l/fastify-nats-client.svg)](http://opensource.org/licenses/MIT)
+  [![license - APACHE-2.0](https://img.shields.io/npm/l/fastify-nats-client.svg)](http://opensource.org/licenses/APACHE-2.0)
 
 Fastify Plugin to use [NATS](http://nats.io) Server as a queue, to exchange messages.
 
@@ -109,6 +109,6 @@ and the same for `log|process|stop` etc.
 
 ## License
 
-Licensed under [MIT](./LICENSE).
+Licensed under [Apache-2.0](./LICENSE).
 
 ----
