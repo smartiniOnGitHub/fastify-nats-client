@@ -42,7 +42,7 @@ async function natsWrapper (fastify, options = {}, natsOptions, next) {
   next()
 }
 
-function fastifyNats (fastify, options, next) {
+async function fastifyNats (fastify, options, next) {
   const {
     enableDefaultNATSServer = false,
     // drainOnClose = false, // commented because not used directly here
@@ -59,17 +59,10 @@ function fastifyNats (fastify, options, next) {
   }
 
   // wrap NATS-related async stuff
-  // simplify in Fastify 3.x, with async plugins available ...
-  natsWrapper(fastify, options, natsOptions, next).then(result => {
-    fastify.log.info(`NATS async wrapper inside the plugin, received result: ${result}`)
-    // assert(fastify.NATS !== null) // to ensure all is good
-    // assert(fastify.nc !== null) // to ensure all is good
-  }).catch(error => {
-    fastify.log.error(`NATS async wrapper inside the plugin, error: ${error}`)
-  })
+  await natsWrapper(fastify, options, natsOptions, next)
 }
 
 module.exports = fp(fastifyNats, {
-  fastify: '^2.12.0',
+  fastify: '^3.3.0',
   name: 'fastify-nats-client'
 })
