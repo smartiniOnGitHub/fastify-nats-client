@@ -1,6 +1,6 @@
 # Change Log
 
-## [2.10.0](https://github.com/smartiniOnGitHub/fastify-nats-client/releases/tag/2.10.0) (unreleased)
+## [2.10.0](https://github.com/smartiniOnGitHub/fastify-nats-client/releases/tag/2.10.0) (2022-04-06)
 [Full Changelog](https://github.com/smartiniOnGitHub/fastify-nats-client/compare/2.2.0...2.10.0)
 Summary Changelog:
 - Update requirements to latest Fastify 2.x, so currently release '^2.15.3'

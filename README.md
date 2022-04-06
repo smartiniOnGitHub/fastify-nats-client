@@ -23,7 +23,7 @@ const fastify = require('fastify')
 
 // register the plugin with some options, for example:
 fastify.register(require('fastify-nats-client'), {
-  natsOptions: 'nats://demo.nats.io:4222'
+  natsOptions: { servers: 'nats://demo.nats.io:4222' }
 })
 
 fastify.listen(3000, (err, address) => {
