@@ -17,6 +17,8 @@
 
 // test NATS by using features exposed by the plugin
 // in corporate networks could not work, due to some firewall (blocking) policies
+// so to skip connection with default (demo) NATS server,
+// some tests here are skipped when the env var NATS_SERVER_URL is defined
 
 const assert = require('assert').strict
 const t = require('tap')
@@ -76,7 +78,22 @@ async function publish (nc, msg = '', enc) {
   nc.publish(k.queueName, enc.encode(msg))
 }
 
+// some info about tests if/when skipped
+if (process.env.NATS_SERVER_URL) {
+  console.log(`Note:
+some tests here are skipped because the env var NATS_SERVER_URL is defined,
+useful for example to avoid connection errors with default (demo) NATS server
+that in corporate networks could not work, due to some firewall (blocking) policies
+----`)
+}
+
 test('fastify.nats should connect to default (demo) NATS server', t => {
+  if (process.env.NATS_SERVER_URL) {
+    t.comment('skipped test on plugin with its default options (which connects to NATS demo server)')
+    t.end()
+    return
+  }
+  // else
   const fastify = Fastify()
   t.teardown(fastify.close.bind(fastify))
 
@@ -113,6 +130,11 @@ test('fastify.nats should connect to the specified NATS server', t => {
     t.ok(fastify.NATS)
     t.ok(fastify.hasDecorator('nc'))
     t.ok(fastify.nc)
+
+    // subscribe to a queue and publish a message to it, as a sample
+    subscribe(fastify.nc, fastify.NATS.StringCodec())
+    publish(fastify.nc, k.message, fastify.NATS.StringCodec())
+
     t.end()
   })
 })
