@@ -95,7 +95,7 @@ test('fastify.nats should connect to default (demo) NATS server', t => {
   }
   // else
   const fastify = Fastify()
-  t.teardown(fastify.close.bind(fastify))
+  t.teardown(() => { fastify.close() })
 
   fastify.register(fastifyNats, fastifyNatsOptions)
   t.comment('configure the plugin with only some override to its default options, and connects to NATS demo server')
@@ -117,7 +117,7 @@ test('fastify.nats should connect to default (demo) NATS server', t => {
 
 test('fastify.nats should connect to the specified NATS server', t => {
   const fastify = Fastify()
-  t.teardown(fastify.close.bind(fastify))
+  t.teardown(() => { fastify.close() })
 
   fastify.register(fastifyNats, {
     natsOptions: k.natsOptions
@@ -147,7 +147,7 @@ test('fastify.nats should work if default (demo) NATS server has been enabled (f
   }
   // else
   const fastify = Fastify()
-  t.teardown(fastify.close.bind(fastify))
+  t.teardown(() => { fastify.close() })
 
   t.comment('configure the plugin with custom options, enable default NATS Server (override default setting)')
   fastify.register(fastifyNats, {
@@ -172,7 +172,7 @@ test('fastify.nats should not work if default (demo) NATS server has not been en
   }
   // else
   const fastify = Fastify()
-  t.teardown(fastify.close.bind(fastify))
+  t.teardown(() => { fastify.close() })
 
   t.comment('configure the plugin with only default options, do not enable default NATS Server (same as default)')
   fastify.register(fastifyNats, {
