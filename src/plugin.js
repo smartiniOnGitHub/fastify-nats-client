@@ -22,24 +22,20 @@ const NATS = require('nats')
 const defaultNATSServerURL = 'nats://demo.nats.io:4222'
 
 // async function to wrap NATS-related stuff
-async function natsWrapper (fastify, options = {}, natsOptions, next) {
+async function natsWrapper (fastify, options = {}, natsOptions) {
   const nc = await NATS.connect(natsOptions)
 
   fastify.decorate('NATS', NATS)
   fastify.decorate('nc', nc)
 
-  fastify.addHook('onClose', async (instance, done) => {
+  fastify.addHook('onClose', async (instance) => {
     if (options.drainOnClose === true) {
       await nc.drain()
     } else {
       await nc.flush()
       await nc.close()
     }
-
-    done()
   })
-
-  next()
 }
 
 async function fastifyNats (fastify, options, next) {
@@ -54,12 +50,12 @@ async function fastifyNats (fastify, options, next) {
     if (enableDefaultNATSServer === true) {
       natsOptions.servers = defaultNATSServerURL
     } else {
-      next(new Error(`Must specify NATS Server/s URL, the default one (${defaultNATSServerURL}) is disabled`))
+      throw new Error(`Must specify NATS Server/s URL, the default one (${defaultNATSServerURL}) is disabled`)
     }
   }
 
   // wrap NATS-related async stuff
-  await natsWrapper(fastify, options, natsOptions, next)
+  await natsWrapper(fastify, options, natsOptions)
 }
 
 module.exports = fp(fastifyNats, {

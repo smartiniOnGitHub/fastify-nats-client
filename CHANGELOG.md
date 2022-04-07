@@ -1,5 +1,12 @@
 # Change Log
 
+## [3.0.1](https://github.com/smartiniOnGitHub/fastify-nats-client/releases/tag/3.0.1) (2022-04-08)
+[Full Changelog](https://github.com/smartiniOnGitHub/fastify-nats-client/compare/3.0.0...3.0.1)
+Summary Changelog:
+- Simplify async functions code (thanks to Fastify 3.x features)
+- Ensure all works with latest Node.js 10 (even if in End-of-Life status), 
+  12 (even if in End-of-Life status soon), 14 LTS, 16 LTS
+
 ## [3.0.0](https://github.com/smartiniOnGitHub/fastify-nats-client/releases/tag/3.0.0) (2022-04-06)
 [Full Changelog](https://github.com/smartiniOnGitHub/fastify-nats-client/compare/2.10.0...3.0.0)
 Summary Changelog:

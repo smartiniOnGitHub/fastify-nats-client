@@ -18,7 +18,7 @@
 const assert = require('assert').strict
 const hostname = require('os').hostname()
 const fastify = require('fastify')({
-  logger: true
+  // logger: true
 })
 // const NATS = require('nats')
 
