@@ -50,8 +50,8 @@ fastify.after((err) => {
   if (err) {
     console.log(err)
   }
-  assert(fastify.NATS !== null) // ensure library is available
-  assert(fastify.nc !== null) // ensure connection is available
+  assert(fastify.NATS !== undefined && fastify.NATS !== null) // ensure library is available
+  assert(fastify.nc !== undefined && fastify.nc !== null) // ensure connection is available
   if (fastify.nc !== null) {
     console.log(`Connected to configured queue server at: '${k.natsOptions.servers}'`)
   }
@@ -84,8 +84,8 @@ fastify.ready((err) => {
   console.log(`Available Routes:\n${routes}`)
 
   // subscribe and publish a message to the queue, as a sample
-  assert(fastify.NATS !== null)
-  assert(fastify.nc !== null)
+  assert(fastify.NATS !== undefined && fastify.NATS !== null)
+  assert(fastify.nc !== undefined && fastify.nc !== null)
   console.log(`Connected to ${fastify.nc.getServer()}`)
   subscribe(fastify.nc)
   publish(fastify.nc, 'Plugin ready')
