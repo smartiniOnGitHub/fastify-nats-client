@@ -1,5 +1,12 @@
 # Change Log
 
+## [3.0.2](https://github.com/smartiniOnGitHub/fastify-nats-client/releases/tag/3.0.2) (2022-04-22)
+[Full Changelog](https://github.com/smartiniOnGitHub/fastify-nats-client/compare/3.0.1...3.0.2)
+Summary Changelog:
+- Small cleanup
+- Improve output of some useful informations
+- Improve assertions and some tests
+
 ## [3.0.1](https://github.com/smartiniOnGitHub/fastify-nats-client/releases/tag/3.0.1) (2022-04-08)
 [Full Changelog](https://github.com/smartiniOnGitHub/fastify-nats-client/compare/3.0.0...3.0.1)
 Summary Changelog:
