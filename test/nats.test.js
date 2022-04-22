@@ -35,6 +35,7 @@ console.log(`NATS demo server (public) URL: ${natsOpts.servers}`)
 
 async function natsConnectAndClose (natsOptions) {
   const nc = await NATS.connect(natsOptions)
+  console.log(`connected to ${nc.getServer()}`)
   await nc.flush()
   await nc.close()
 }
@@ -75,6 +76,7 @@ test('nats should connect to default NATS server and send an empty message', asy
     t.pass('test skipped, because env var NATS_SERVER_URL is defined')
   } else {
     const nc = await NATS.connect({ servers: `${natsDemoHost}:${natsDemoPort}` })
+    console.log(`connected to ${nc.getServer()}`)
     const subj = NATS.createInbox()
     const mp = NATS.deferred()
     const sub = nc.subscribe(subj)
@@ -100,6 +102,7 @@ test('nats should connect to default NATS server and send and receive a sample t
   } else {
     // setup connection and general objects
     const nc = await NATS.connect({ servers: `${natsDemoHost}:${natsDemoPort}` })
+    console.log(`connected to ${nc.getServer()}`)
     const sc = NATS.StringCodec() // codec for a string message
     t.pass()
 
@@ -175,6 +178,7 @@ test('nats should connect to default NATS server and send/receive a sample JSON 
   } else {
     // setup connection and general objects
     const nc = await NATS.connect({ servers: `${natsDemoHost}:${natsDemoPort}` })
+    console.log(`connected to ${nc.getServer()}`)
     // const sc = NATS.StringCodec() // codec for a string message
     const jc = NATS.JSONCodec() // codec for a JSON string message
     t.pass()
@@ -236,6 +240,7 @@ test('nats should connect to default NATS server and send/receive/unsubscribe a 
   } else {
     // setup connection and general objects
     const nc = await NATS.connect({ servers: `${natsDemoHost}:${natsDemoPort}` })
+    console.log(`connected to ${nc.getServer()}`)
     const sc = NATS.StringCodec() // codec for a string message
     t.pass()
 

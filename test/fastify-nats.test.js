@@ -106,6 +106,7 @@ test('fastify.nats should connect to default (demo) NATS server', t => {
     t.ok(fastify.NATS)
     t.ok(fastify.hasDecorator('nc'))
     t.ok(fastify.nc)
+    console.log(`connected to ${fastify.nc.getServer()}`)
 
     // subscribe to a queue and publish a message to it, as a sample
     subscribe(fastify.nc, fastify.NATS.StringCodec())
@@ -130,6 +131,7 @@ test('fastify.nats should connect to the specified NATS server', t => {
     t.ok(fastify.NATS)
     t.ok(fastify.hasDecorator('nc'))
     t.ok(fastify.nc)
+    console.log(`connected to ${fastify.nc.getServer()}`)
 
     // subscribe to a queue and publish a message to it, as a sample
     subscribe(fastify.nc, fastify.NATS.StringCodec())
@@ -160,6 +162,7 @@ test('fastify.nats should work if default (demo) NATS server has been enabled (f
     t.ok(fastify.NATS)
     t.ok(fastify.hasDecorator('nc'))
     t.ok(fastify.nc)
+    console.log(`connected to ${fastify.nc.getServer()}`)
     t.end()
   })
 })
@@ -198,6 +201,11 @@ test('fastify.nats should not work if default (demo) NATS server has not been en
     t.notOk(fastify.NATS)
     t.notOk(fastify.hasDecorator('nc'))
     t.notOk(fastify.nc)
+    t.throws(function () {
+      // console.log(`connected to ${fastify.nc.getServer()}`)
+      t.notOk(fastify.nc.getServer())
+      assert(fastify.nc === null) // never executed
+    }, Error, 'Expected exception because no connection')
 
     t.end()
   })
