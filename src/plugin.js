@@ -38,7 +38,7 @@ async function natsWrapper (fastify, options = {}, natsOptions) {
   })
 }
 
-async function fastifyNats (fastify, options, next) {
+async function fastifyNats (fastify, options) {
   const {
     enableDefaultNATSServer = false,
     // drainOnClose = false, // commented because not used directly here
