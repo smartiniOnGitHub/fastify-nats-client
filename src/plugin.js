@@ -59,6 +59,6 @@ async function fastifyNats (fastify, options) {
 }
 
 module.exports = fp(fastifyNats, {
-  fastify: '^3.3.0',
+  fastify: '^4.0.0',
   name: 'fastify-nats-client'
 })

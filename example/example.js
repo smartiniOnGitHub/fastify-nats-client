@@ -69,7 +69,7 @@ fastify.get('/', function (req, reply) {
   publish(fastify.nc, `Hello World, from the root page of a Fastify web application at '${hostname}'!`)
 })
 
-fastify.listen(k.port, k.address, (err, address) => {
+fastify.listen({ port: k.port, host: k.address }, (err, address) => {
   if (err) {
     throw err
   }

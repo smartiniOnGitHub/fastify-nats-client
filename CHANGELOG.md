@@ -1,5 +1,13 @@
 # Change Log
 
+## [4.0.0](https://github.com/smartiniOnGitHub/fastify-nats-client/releases/tag/4.0.0) (unreleased)
+[Full Changelog](https://github.com/smartiniOnGitHub/fastify-nats-client/compare/3.0.2...4.0.0)
+Summary Changelog:
+- Updated requirements to Fastify '^4.0.0'
+- Updated all dependencies to latest (for Node.js 14 LTS)
+- Update example and test code
+- Update documentation from sources with JSDoc
+
 ## [3.0.2](https://github.com/smartiniOnGitHub/fastify-nats-client/releases/tag/3.0.2) (2022-04-22)
 [Full Changelog](https://github.com/smartiniOnGitHub/fastify-nats-client/compare/3.0.1...3.0.2)
 Summary Changelog:
