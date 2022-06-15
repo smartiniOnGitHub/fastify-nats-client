@@ -3,10 +3,9 @@
   [![NPM Version](https://img.shields.io/npm/v/fastify-nats-client.svg?style=flat)](https://npmjs.org/package/fastify-nats-client/)
   [![NPM Downloads](https://img.shields.io/npm/dm/fastify-nats-client.svg?style=flat)](https://npmjs.org/package/fastify-nats-client/)
   [![Code Style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](http://standardjs.com/)
-  [![Coverage Status](https://coveralls.io/repos/github/smartiniOnGitHub/fastify-nats-client/badge.svg?branch=master)](https://coveralls.io/github/smartiniOnGitHub/fastify-nats-client/?branch=master)
   [![license - APACHE-2.0](https://img.shields.io/npm/l/fastify-nats-client.svg)](http://opensource.org/licenses/APACHE-2.0)
 
-Fastify Plugin to use [NATS](http://nats.io) Server as a queue, to exchange messages.
+Fastify Plugin to use [NATS](http://nats.io) Server to exchange messages via queues etc.
 
 Under the hood [nats.js](https://github.com/nats-io/nats.js) library is used; 
 the plugin has some options (to set in the `register`), 
@@ -26,7 +25,7 @@ fastify.register(require('fastify-nats-client'), {
   natsOptions: { servers: 'nats://demo.nats.io:4222' }
 })
 
-fastify.listen(3000, (err, address) => {
+fastify.listen({ port: 3000, host: 'localhost' }, (err, address) => {
   if (err) throw err
   console.log(`server listening on ${address}`)
 })
@@ -55,9 +54,9 @@ please refer to its documentation and sources for more info and examples.
 
 ## Requirements
 
-Fastify ^3.3.0 , Node.js 10 LTS (10.13.0) or later.
+Fastify ^4.0.0 , Node.js 10 LTS (14.15.0) or later.
 
-Note that plugin releases 2.x are for Fastify 2.x, 3.x are for Fastify 3.x, etc.
+Note that plugin releases 3.x are for Fastify 3.x, 4.x are for Fastify 4.x, etc.
 
 
 ## Sources
