@@ -1,6 +1,6 @@
 # Change Log
 
-## [4.0.0](https://github.com/smartiniOnGitHub/fastify-nats-client/releases/tag/4.0.0) (unreleased)
+## [4.0.0](https://github.com/smartiniOnGitHub/fastify-nats-client/releases/tag/4.0.0) (2022-06-15)
 [Full Changelog](https://github.com/smartiniOnGitHub/fastify-nats-client/compare/3.0.2...4.0.0)
 Summary Changelog:
 - Updated requirements to Fastify '^4.0.0'
