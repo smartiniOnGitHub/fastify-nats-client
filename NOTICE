@@ -1,6 +1,6 @@
 fastify-nats-client
 
-Copyright (c) 2018-2022 Sandro Martini
+Copyright (c) 2018-2023 Sandro Martini
 
 This software is based in part on the work done by Muhammad Ahmed
 in [fastify-nats](https://github.com/mahmed8003/fastify-nats)
