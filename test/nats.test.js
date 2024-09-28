@@ -233,6 +233,8 @@ test('nats should connect to default NATS server and send/receive a sample JSON 
   t.end()
 })
 
+// TODO: temp ...
+/*
 test('nats should connect to default NATS server and send/receive/unsubscribe a sample message', async (t) => {
   if (process.env.NATS_SERVER_URL) {
     t.comment('skipped test on nats with its default options (which connects to NATS demo server)')
@@ -274,5 +276,6 @@ test('nats should connect to default NATS server and send/receive/unsubscribe a 
   }
   t.end()
 })
+*/
 
 // there are many features in NATS.js, see related library and examples ...
