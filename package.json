@@ -24,10 +24,10 @@
     "test:coverage:all": "npm run test:unit -- --coverage-report=text",
     "test:coverage": "npm run test:unit -- --coverage-report=html",
     "test:docker": "npm run docker:nats:start && npm run test:unit:docker && npm run docker:nats:stop",
-    "test:unit:debug": "tap -T --node-arg=--inspect-brk test/*.test.js",
-    "test:unit:dev": "tap --jobs=1 --watch --coverage-report=none test/*.test.js",
+    "test:unit:debug": "tap -T --node-arg=--inspect-brk",
+    "test:unit:dev": "tap --jobs=1 --watch --coverage-report=none",
     "test:unit:docker": "NATS_SERVER_URL=nats://localhost:4222 npm run test:unit",
-    "test:unit": "tap --jobs=1 --allow-incomplete-coverage test/*.test.js",
+    "test:unit": "tap --jobs=1 --allow-incomplete-coverage",
     "test": "npm run lint && npm run test:unit"
   },
   "dependencies": {
