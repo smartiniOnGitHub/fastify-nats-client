@@ -1,9 +1,10 @@
 {
   "name": "fastify-nats-client",
-  "version": "4.1.0",
+  "version": "5.0.0",
   "description": "Fastify plugin for using NATS",
   "main": "src/plugin",
   "scripts": {
+    "audit:log": "npm audit > ./temp/audit.log",
     "clean:install": "rm -rf ./package-lock.json ./node_modules/",
     "dependency:log": "npm list > ./temp/dependencies.log",
     "docker:nats:log": "docker logs --follow --tail=1000 nats",
@@ -19,29 +20,29 @@
     "lint:fix": "standard --fix",
     "lint:standard": "standard --verbose",
     "lint": "npm run lint:standard",
-    "test:clean": "rm -rf .nyc_output/* ./coverage/*",
-    "test:coverage:all": "npm run test:unit --  --cov",
-    "test:coverage": "npm run test:unit -- --cov --coverage-report=html",
+    "test:clean": "rm -rf .nyc_output/* .tap/* ./coverage/*",
+    "test:coverage:all": "npm run test:unit -- --coverage-report=text",
+    "test:coverage": "npm run test:unit -- --coverage-report=html",
     "test:docker": "npm run docker:nats:start && npm run test:unit:docker && npm run docker:nats:stop",
-    "test:unit:debug": "tap -T --node-arg=--inspect-brk test/*.test.js",
-    "test:unit:dev": "tap -J --watch --cov test/*.test.js",
+    "test:unit:debug": "tap -T --node-arg=--inspect-brk",
+    "test:unit:dev": "tap --jobs=1 --watch --coverage-report=none",
     "test:unit:docker": "NATS_SERVER_URL=nats://localhost:4222 npm run test:unit",
-    "test:unit": "tap -J test/*.test.js",
+    "test:unit": "tap --allow-incomplete-coverage",
     "test": "npm run lint && npm run test:unit"
   },
   "dependencies": {
-    "fastify-plugin": "^4.0.0",
-    "nats": "^2.7.1"
+    "fastify-plugin": "^5.0.1",
+    "nats": "^2.28.2"
   },
   "devDependencies": {
-    "fastify": "^4.0.1",
-    "jsdoc": "^3.6.10",
-    "standard": "^17.0.0",
-    "tap": "^16.3.0"
+    "fastify": "^5.0.0",
+    "jsdoc": "^4.0.3",
+    "standard": "^17.1.2",
+    "tap": "^21.0.1"
   },
   "peerDependencies": {},
   "engines": {
-    "node": ">=14.15.0"
+    "node": ">=20.9.0"
   },
   "homepage": "https://github.com/smartiniOnGitHub/fastify-nats-client#readme",
   "repository": {

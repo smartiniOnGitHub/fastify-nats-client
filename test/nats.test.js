@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2023 the original author or authors.
+ * Copyright 2022-2024 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -164,6 +164,7 @@ test('nats should connect to default NATS server and send and receive a sample t
     // await nc.flush()
     // await nc.close()
     // t.pass()
+    // or
     // get all messages (even those in-flight) then closes the connection
     await nc.drain()
     t.pass()
@@ -266,11 +267,17 @@ test('nats should connect to default NATS server and send/receive/unsubscribe a 
     // sub.unsubscribe(1) // cancel after n message/s
     t.pass()
 
-    await sub.closed
+    // don't exit until the client closes
+    // await nc.closed()
+    // but this doesn't work here
+    // or
     // flush and close connection
     await nc.flush()
     await nc.close()
-    t.pass()
+    // or
+    // get all messages (even those in-flight) then closes the connection
+    // await nc.drain()
+    // t.pass() // pass this test
   }
   t.end()
 })
