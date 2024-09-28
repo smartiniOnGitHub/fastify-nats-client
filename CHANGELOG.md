@@ -1,5 +1,11 @@
 # Change Log
 
+## [5.0.0](https://github.com/smartiniOnGitHub/fastify-favicon/releases/tag/5.0.0) (unreleased)
+[Full Changelog](https://github.com/smartiniOnGitHub/fastify-favicon/compare/4.1.0...5.0.0)
+Summary Changelog:
+- Updated requirements to Fastify '^5.0.0'
+- Updated all dependencies to latest (for Node.js 20 LTS)
+
 ## [4.1.0](https://github.com/smartiniOnGitHub/fastify-nats-client/releases/tag/4.1.0) (2022-07-14)
 [Full Changelog](https://github.com/smartiniOnGitHub/fastify-nats-client/compare/4.0.0...4.1.0)
 Summary Changelog:
