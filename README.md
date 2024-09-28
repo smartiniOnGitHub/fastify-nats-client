@@ -104,6 +104,14 @@ standard image [NATS - DockerHub](https://hub.docker.com/_/nats/);
 for convenience, they are defined in `package.json` like `docker:nats:start` 
 and the same for `log|process|stop` etc.
 
+Current version of the plugin uses the usual [nats](https://www.npmjs.com/package/nats) library,
+which has been moved as sources to [nats.node - GitHub](https://github.com/nats-io/nats.node); 
+**future versions of the plugin** will be updated to use newer major release of the library 
+(that has been splitted in multiple libraries to be more modular, 
+with core features in '@nats-io/nats-core'); 
+see [Migration guide - nats.js - GitHub](https://github.com/nats-io/nats.js/blob/main/migration.md) 
+for more info.
+
 
 ## License
 

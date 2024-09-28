@@ -5,6 +5,7 @@
 Summary Changelog:
 - Updated requirements to Fastify '^5.0.0'
 - Updated all dependencies to latest (for Node.js 20 LTS)
+- Add a note to clarify NATS library used and future evolutions inside the plugin
 
 ## [4.1.0](https://github.com/smartiniOnGitHub/fastify-nats-client/releases/tag/4.1.0) (2022-07-14)
 [Full Changelog](https://github.com/smartiniOnGitHub/fastify-nats-client/compare/4.0.0...4.1.0)
