@@ -164,6 +164,7 @@ test('nats should connect to default NATS server and send and receive a sample t
     // await nc.flush()
     // await nc.close()
     // t.pass()
+    // or
     // get all messages (even those in-flight) then closes the connection
     await nc.drain()
     t.pass()
@@ -233,8 +234,6 @@ test('nats should connect to default NATS server and send/receive a sample JSON 
   t.end()
 })
 
-// TODO: temp ...
-/*
 test('nats should connect to default NATS server and send/receive/unsubscribe a sample message', async (t) => {
   if (process.env.NATS_SERVER_URL) {
     t.comment('skipped test on nats with its default options (which connects to NATS demo server)')
@@ -268,14 +267,19 @@ test('nats should connect to default NATS server and send/receive/unsubscribe a 
     // sub.unsubscribe(1) // cancel after n message/s
     t.pass()
 
-    await sub.closed
+    // don't exit until the client closes
+    // await nc.closed()
+    // but this doesn't work here
+    // or
     // flush and close connection
     await nc.flush()
     await nc.close()
-    t.pass()
+    // or
+    // get all messages (even those in-flight) then closes the connection
+    // await nc.drain()
+    // t.pass() // pass this test
   }
   t.end()
 })
-*/
 
 // there are many features in NATS.js, see related library and examples ...
